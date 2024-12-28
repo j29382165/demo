@@ -9,5 +9,6 @@ public interface ProductDao { //product類型的返回方法
 
     void updateProduct(Integer productId, ProductRequest productRequest);
 
+    void deleteProductById(Integer productId);
 
 }

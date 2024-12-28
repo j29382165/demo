@@ -21,7 +21,7 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
         if (product != null){
-            return ResponseEntity.status(HttpStatus.OK).body(product);
+            return ResponseEntity.status(HttpStatus.OK).body(product); // OK 200
         }
         else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -45,7 +45,7 @@ public class ProductController {
         Product product=productService.getProductById(productId);
 
         if(product==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();//找不到商品回傳404
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();//找不到商品回傳 NOT_FOUND 404
         }
 
         //商品存在，則修改商品的數據
@@ -58,6 +58,16 @@ public class ProductController {
 
     }
 
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer productId){
+        //此功能是讓商品不存在,前端只要結果商品不存在，不在乎後端是否執行刪除，也有可能是商品本身不存在or後端刪除才不存在
+
+        productService.deleteProductById(productId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        // NO_CONTENT 204表明請求已成功處理，但伺服器未傳回任何內容
+
+    }
 
 
 }
