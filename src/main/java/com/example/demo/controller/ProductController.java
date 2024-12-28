@@ -36,4 +36,28 @@ public class ProductController {
        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,
+                                                @RequestBody @Valid ProductRequest productRequest){
+        //接住前端傳過來的參數:允許修改productName category imageUrl price stock description @RequestBody～
+
+        //用productId檢查商品數據是否存在
+        Product product=productService.getProductById(productId);
+
+        if(product==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();//找不到商品回傳404
+        }
+
+        //商品存在，則修改商品的數據
+        //productService提供update方法
+        productService.updateProduct(productId,productRequest);
+
+        Product updateProduct = productService.getProductById(productId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
+
+    }
+
+
+
 }

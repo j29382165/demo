@@ -69,4 +69,25 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
 
         return productId;
     }
+
+    @Override
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+        //前端傳過來的參數:允許修改productName category imageUrl price stock description,修改時間的值
+        //寫到資料庫
+        String sql ="UPDATE product SET product_name=:productName, category=:category, " +
+                "image_url=:imageUrl,price=:price,stock=:stock,description=:description," +
+                "last_modified_date=:lastModifiedDate WHERE product_id=:productId";
+
+        Map<String,Object>map=new LinkedHashMap<>();
+        map.put("productId",productId);
+        map.put("productName",productRequest.getProductName());
+        map.put("category",productRequest.getCategory().toString());
+        map.put("imageUrl",productRequest.getImageUrl());
+        map.put("price",productRequest.getPrice());
+        map.put("stock",productRequest.getStock());
+        map.put("description",productRequest.getDescription());
+
+        map.put("lastModifiedDate",new Date());
+        namedParameterJdbcTemplate.update(sql,map);
+    }
 }
