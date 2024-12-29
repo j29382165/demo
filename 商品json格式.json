@@ -1,0 +1,35 @@
+[
+  {
+    "productId": 1,
+    "productName": "蘋果",
+    "category": "FOOD",
+    "imageUrl": "https://cdn.pixabay.com/photo/2014/02/01/17/28/apple-256261__480.jpg",
+    "price": 20,
+    "stock": 10,
+    "description": "這是來自澳洲的蘋果！",
+    "createDate": "2022-03-01 02:41:28",
+    "lastModifiedDate": "2022-03-01 02:41:32"
+  },
+  {
+    "productId": 2,
+    "productName": "Tesla",
+    "category": "CAR",
+    "imageUrl": "https://cdn.pixabay.com/photo/2024/03/02/07/09/car-8607713_1280.jpg",
+    "price": 1850000,
+    "stock": 15,
+    "description": "這是帥車特斯拉model S！ Sexy Beauty Car",
+    "createDate": "2024-12-22 16:05:11",
+    "lastModifiedDate": "2024-12-28 14:47:05"
+  },
+  {
+    "productId": 3,
+    "productName": "文茜說世紀典範人物：不帶虛名的外衣走天涯──邱吉爾、戴高樂、羅斯福",
+    "category": "E_BOOK",
+    "imageUrl": "https://im1.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/088/66/0010886688.jpg&v=604f375ak&w=348&h=348",
+    "price": 320,
+    "stock": 10,
+    "description": "文茜的書，典範歷史人物邱吉爾、戴高樂、羅斯福",
+    "createDate": "2024-12-22 16:10:07",
+    "lastModifiedDate": "2024-12-22 16:10:07"
+  }
+]

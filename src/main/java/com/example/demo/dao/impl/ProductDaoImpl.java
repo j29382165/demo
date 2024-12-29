@@ -1,5 +1,6 @@
 package com.example.demo.dao.impl;
 
+import com.example.demo.constant.ProductCategory;
 import com.example.demo.dao.ProductDao;
 import com.example.demo.dto.ProductRequest;
 import com.example.demo.model.Product;
@@ -24,13 +25,20 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(){
+    public List<Product> getProducts(ProductCategory category){
 
         String sql = "SELECT product_id, product_name, category, " +
                 "image_url, price, stock, description, created_date, " +
-                "last_modified_date FROM product";
+                "last_modified_date FROM product WHERE 1=1";
+        //
 
         Map<String, Object> map = new LinkedHashMap<>(); //空的map
+
+        if(category !=null){
+            sql=sql+" AND category = :category"; // AND前方空白鍵一定要留，才不會跟前面的語句黏在一起
+            map.put("category",category.name()); //category是enum類型，可使用enum的name方法
+        }
+
         List<Product> productList=namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper()); //資料庫查詢出來的放到map裡
 
         return productList;

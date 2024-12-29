@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.constant.ProductCategory;
 import com.example.demo.dto.ProductRequest;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
@@ -19,8 +20,10 @@ public class ProductController {
     private ProductService productService; //注入service的bean
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
-        List<Product>productList=productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(
+          @RequestParam(required = false) ProductCategory category
+    ){
+        List<Product>productList=productService.getProducts(category);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
