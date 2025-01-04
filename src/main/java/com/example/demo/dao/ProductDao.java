@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductDao { //product類型的返回方法
 
-    List<Product> getProducts(ProductCategory category);
+    List<Product> getProducts(ProductCategory category,String search);
 
     Product getProductById(Integer productId);
 

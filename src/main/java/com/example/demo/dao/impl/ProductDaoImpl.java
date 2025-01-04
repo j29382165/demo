@@ -25,7 +25,7 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category){
+    public List<Product> getProducts(ProductCategory category,String search){
 
         String sql = "SELECT product_id, product_name, category, " +
                 "image_url, price, stock, description, created_date, " +
@@ -38,6 +38,12 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
             sql=sql+" AND category = :category"; // AND前方空白鍵一定要留，才不會跟前面的語句黏在一起
             map.put("category",category.name()); //category是enum類型，可使用enum的name方法
         }
+
+        if(search!=null){
+            sql=sql+" AND product_name LIKE :search"; //:search占位符，:search 參數化查詢，可以有效避免 SQL 注入攻擊。
+            map.put("search","%"+search+"%"); //AND...LIKE %+search+%模糊搜尋
+        }
+
 
         List<Product> productList=namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper()); //資料庫查詢出來的放到map裡
 
