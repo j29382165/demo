@@ -12,10 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class ProductDaoImpl implements ProductDao { //成為Bean
@@ -41,6 +38,15 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
         if(productQueryParams.getSearch() !=null){
             sql=sql+" AND product_name LIKE :search"; //:search占位符，:search 參數化查詢，可以有效避免 SQL 注入攻擊。
             map.put("search","%"+productQueryParams.getSearch()+"%"); //AND...LIKE %+search+%模糊搜尋
+        }
+
+        sql=sql+" ORDER BY "+ productQueryParams.getOrderBy()+" "+ productQueryParams.getSort();
+        // 寫sql語句注意空白，才不會全部黏在一起不能執行
+
+        //避免 SQL注入風險
+        List<String> validColumns = Arrays.asList("price", "created_date", "stock");
+        if (!validColumns.contains(productQueryParams.getOrderBy())) {
+            throw new IllegalArgumentException("Invalid orderBy parameter");
         }
 
 
