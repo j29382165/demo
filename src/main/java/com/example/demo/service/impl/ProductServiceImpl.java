@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.constant.ProductCategory;
 import com.example.demo.dao.ProductDao;
+import com.example.demo.dto.ProductQueryParams;
 import com.example.demo.dto.ProductRequest;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
@@ -16,8 +16,8 @@ public class ProductServiceImpl implements ProductService { //變成bean
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category,String search) {
-        return productDao.getProducts(category,search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override
