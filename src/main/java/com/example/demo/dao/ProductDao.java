@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ProductDao { //product類型的返回方法
 
+    Integer countProduct(ProductQueryParams productQueryParams);
+
     List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Product getProductById(Integer productId);

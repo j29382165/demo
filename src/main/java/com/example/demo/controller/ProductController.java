@@ -5,6 +5,7 @@ import com.example.demo.dto.ProductQueryParams;
 import com.example.demo.dto.ProductRequest;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
+import com.example.demo.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class ProductController {
     private ProductService productService; //注入service的bean
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             // 查詢條件Filtering
           @RequestParam(required = false) ProductCategory category,
           @RequestParam(required = false) String search,
@@ -49,9 +50,20 @@ public class ProductController {
         productQueryParams.setLimit(limit);
         productQueryParams.setOffset(offset);
 
+        // 取得product list
         List<Product>productList=productService.getProducts(productQueryParams);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        // 取得product 總數
+        Integer total=productService.countProduct(productQueryParams);
+
+        // 分頁
+        Page<Product> page = new Page<>();
+        page.setLimit(limit); //前端傳來的值存到這,取幾筆
+        page.setOffset(offset); //跳過幾筆
+        page.setTotal(total); //等一下回來寫 總數幾筆
+        page.setResults(productList); //回傳商品資料
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     @GetMapping("/products/{productId}")

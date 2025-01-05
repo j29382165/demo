@@ -21,6 +21,28 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
+    public Integer countProduct(ProductQueryParams productQueryParams) {
+        String sql="SELECT count(*) FROM product WHERE 1=1";
+
+        Map<String, Object> map = new LinkedHashMap<>(); //空的map
+
+        //查詢條件category
+        if(productQueryParams.getCategory() !=null){
+            sql=sql+" AND category = :category"; // AND前方空白鍵一定要留，才不會跟前面的語句黏在一起
+            map.put("category",productQueryParams.getCategory().name()); //category是enum類型，可使用enum的name方法
+        }
+
+        //查詢條件search
+        if(productQueryParams.getSearch() !=null){
+            sql=sql+" AND product_name LIKE :search"; //:search占位符，:search 參數化查詢，可以有效避免 SQL 注入攻擊。
+            map.put("search","%"+productQueryParams.getSearch()+"%"); //AND...LIKE %+search+%模糊搜尋
+        }
+        Integer total= namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class); //count轉成integer類型
+
+        return total;
+    }
+
+    @Override
     public List<Product> getProducts(ProductQueryParams productQueryParams){
 
         String sql = "SELECT product_id, product_name, category, " +
@@ -46,11 +68,12 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
         sql=sql+" ORDER BY "+ productQueryParams.getOrderBy()+" "+ productQueryParams.getSort();
         // 寫sql語句注意空白，才不會全部黏在一起不能執行
 
-        //避免 SQL注入風險
+        /* //避免 SQL注入風險
         List<String> validColumns = Arrays.asList("price", "created_date", "stock");
         if (!validColumns.contains(productQueryParams.getOrderBy())) {
             throw new IllegalArgumentException("Invalid orderBy parameter");
         }
+        */
 
         //查詢條件limit offset
         sql=sql+ " LIMIT :limit OFFSET :offset";
