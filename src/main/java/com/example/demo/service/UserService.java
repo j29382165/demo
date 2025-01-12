@@ -9,4 +9,7 @@ public interface UserService {
     Integer register(UserRegisterRequest userRegisterRequest);
     User getUserById(Integer userId);
     User login(UserLoginRequest userLoginRequest);
+
+    //整批加密之前明碼,執行過就關閉
+//    void updateAllUserPasswords();
 }

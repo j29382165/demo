@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Component
 public class UserServiceImpl implements UserService { //加Component,讓UserServiceImpl成為Bean
@@ -67,7 +69,20 @@ public class UserServiceImpl implements UserService { //加Component,讓UserServ
         }
     }
 
-
+    //整批加密之前明碼,執行過就關閉
+//    @Override
+//    public void updateAllUserPasswords() {
+//        List<User> users = userDao.getAllUsers();
+//        for (User user : users) {
+//            String hashedPassword = DigestUtils.md5DigestAsHex(user.getPassword().getBytes(StandardCharsets.UTF_8));
+//            user.setPassword(hashedPassword);
+//            userDao.updateUserPassword(user.getUserId(), hashedPassword);
+//        }
+//    }
+//    @PostConstruct
+//    public void init() {
+//        updateAllUserPasswords();
+//    }
 
 
 }

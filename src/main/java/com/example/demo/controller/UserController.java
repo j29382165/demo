@@ -36,5 +36,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    //整批加密之前明碼,執行過就關閉
+//    @PostMapping("/users/updatepasswords")
+//    public ResponseEntity<String> updateAllUserPasswords() {
+//        userService.updateAllUserPasswords();
+//        return ResponseEntity.status(HttpStatus.OK).body("All user passwords have been updated.");
+//    }
 
 }

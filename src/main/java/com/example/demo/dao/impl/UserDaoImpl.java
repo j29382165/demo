@@ -73,4 +73,22 @@ public class UserDaoImpl implements UserDao { //加Component,讓UserDaoImpl成�
             return null;
         }
     }
+
+    //整批加密之前明碼,執行過就關閉
+//    @Override
+//    public List<User> getAllUsers() {
+//        String sql = "SELECT user_id, email, password, created_date, last_modified_date FROM user";
+//        return namedParameterJdbcTemplate.query(sql, new UserRowMapper());
+//    }
+//
+//    @Override
+//    public void updateUserPassword(Integer userId, String hashedPassword) {
+//        String sql = "UPDATE user SET password = :hashedPassword WHERE user_id = :userId";
+//        Map<String, Object> map = new LinkedHashMap<>();
+//        map.put("userId", userId);
+//        map.put("hashedPassword", hashedPassword);
+//        namedParameterJdbcTemplate.update(sql, map);
+//    }
+
+
 }
