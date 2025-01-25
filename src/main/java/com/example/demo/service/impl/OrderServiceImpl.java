@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.OrderDao;
 import com.example.demo.dto.BuyItem;
 import com.example.demo.dto.CreateOrderRequest;
+import com.example.demo.model.Order;
 import com.example.demo.model.OrderItem;
 import com.example.demo.model.Product;
 import com.example.demo.service.OrderService;
@@ -21,6 +22,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        // order table
+        Order order = orderDao.getOrderById(orderId);
+
+        // order item table
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+
+        order.setOrderItemList(orderItemList);
+        return order;
+    }
 
     //service層 商業邏輯判斷
     @Transactional //Order table、order item table都一起成功或一起失敗,避免數據不一致的問題
@@ -56,4 +69,6 @@ public class OrderServiceImpl implements OrderService {
         return orderId;
 
     }
+
+
 }

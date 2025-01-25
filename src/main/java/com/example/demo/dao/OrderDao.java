@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.dto.CreateOrderRequest;
+import com.example.demo.model.Order;
 import com.example.demo.model.OrderItem;
 
 import java.util.List;
@@ -11,5 +12,8 @@ public interface OrderDao {
 
     void createOrderItems (Integer orderId, List<OrderItem> orderItemList);
 
+    Order getOrderById(Integer orderId);
+
+    List<OrderItem> getOrderItemsByOrderId (Integer orderId);
 
 }
