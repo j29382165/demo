@@ -21,4 +21,6 @@ public interface ProductDao { //product類型的返回方法
 
     void deleteProductById(Integer productId);
 
+    void updateStock(Integer productId,Integer stock); //更新庫存
+
 }

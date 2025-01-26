@@ -20,6 +20,7 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+
     @Override
     public Integer countProduct(ProductQueryParams productQueryParams) {
         String sql = "SELECT count(*) FROM product WHERE 1=1";
@@ -136,6 +137,19 @@ public class ProductDaoImpl implements ProductDao { //成為Bean
 
         map.put("lastModifiedDate", new Date());
         namedParameterJdbcTemplate.update(sql, map);
+    }
+
+    @Override
+    public void updateStock(Integer productId, Integer stock) {
+        String sql = "UPDATE product SET stock = :stock, last_modified_date = :lastModifiedDate" +
+                " WHERE product_id = :productId ";
+
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("productId", productId);
+        map.put("stock", stock);
+        map.put("lastModifiedDate", new Date());
+        namedParameterJdbcTemplate.update(sql, map);
+
     }
 
     @Override
