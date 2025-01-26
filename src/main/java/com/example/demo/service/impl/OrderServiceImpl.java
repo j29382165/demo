@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.OrderDao;
 import com.example.demo.dto.BuyItem;
 import com.example.demo.dto.CreateOrderRequest;
+import com.example.demo.dto.OrderQueryParams;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderItem;
 import com.example.demo.model.Product;
@@ -24,6 +25,9 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class OrderServiceImpl implements OrderService {
+    //制式寫法log slf4j ,換掉class名稱即可
+    private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private OrderDao orderDao;
 
@@ -33,9 +37,21 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private UserDao userDao;
 
-    //制式寫法log slf4j ,換掉class名稱即可
-    private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        return orderDao.countOrder(orderQueryParams);
+    }
 
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+
+        for(Order order : orderList){
+            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
+            order.setOrderItemList(orderItemList);
+        }
+        return orderList;
+    }
 
     @Override
     public Order getOrderById(Integer orderId) {

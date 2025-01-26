@@ -1,6 +1,7 @@
 package com.example.demo.dao.impl;
 
 import com.example.demo.dao.OrderDao;
+import com.example.demo.dto.OrderQueryParams;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderItem;
 import com.example.demo.rowmapper.OrderItemRowMapper;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +23,33 @@ import java.util.Map;
 public class OrderDaoImpl implements OrderDao { //加component變成bean
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate; //注入 namedParameterJdbcTemplate 的bean
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date " +
+                "FROM `order` WHERE 1=1 ";
+
+        Map<String, Object> map = new LinkedHashMap<>();
+        sql += "AND user_id = :userId ";
+        map.put("userId", orderQueryParams.getUserId());
+
+        sql += "ORDER BY created_date DESC LIMIT :limit OFFSET :offset";
+        map.put("limit", orderQueryParams.getLimit());
+        map.put("offset", orderQueryParams.getOffset());
+
+        return namedParameterJdbcTemplate.query(sql, map, new OrderRowMapper());
+    }
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT COUNT(*) FROM `order` WHERE 1=1 ";
+
+        Map<String, Object> map = new LinkedHashMap<>();
+        sql += "AND user_id = :userId ";
+        map.put("userId", orderQueryParams.getUserId());
+
+        return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+    }
 
     @Override
     public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
@@ -49,7 +78,6 @@ public class OrderDaoImpl implements OrderDao { //加component變成bean
             return null;
         }
     }
-
 
 
     @Override
@@ -109,5 +137,11 @@ public class OrderDaoImpl implements OrderDao { //加component變成bean
         namedParameterJdbcTemplate.batchUpdate(sql, parameterSources);
     }
 
-
+    private String addFilteringSql(String sql, Map<String, Object> map, OrderQueryParams orderQueryParams) {
+        if(orderQueryParams.getUserId() != null){
+            sql = sql + " AND user_id = :userId";
+            map.put("userId", orderQueryParams.getUserId());
+        }
+        return sql;
+    }
 }
