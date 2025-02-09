@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍購物網 Book Cart</title>
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'>
+    <!-- Custom CSS -->
+    <link href="css/style_login.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">書籍購物網 Book Cart</a>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="搜尋書籍" aria-label="Search">
+            </form>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link" href="#">Login</a>
+        
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        使用者登入
+                        <a href="/register" class="btn btn-link text-white float-end">註冊</a>
+                    </div>
+                    <div class="card-body">
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">帳號(電子郵件)</label>
+                                <input type="text" class="form-control" id="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">密碼</label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">登入</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>
+<script src="js/script_login.js"></script>
+</body>
+</html>
+
+
+<!--按順序
+1. jQuery 先載入 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+
+2.  Bootstrap 的 JavaScript 
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>
+
+3. 自定義的 JavaScript 
+<script src="script_listpage.js"></script>
+
+jQuery 是地基
+Bootstrap JS 是牆壁
+自定義 JS 是裝潢
+
+-->
